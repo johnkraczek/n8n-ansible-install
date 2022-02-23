@@ -1,0 +1,23 @@
+- name: Check if Certificate exists
+  tags:
+    - certificate
+  stat:
+    path: /etc/letsencrypt/live/{{domain}}/fullchain.pem
+  register: certificate
+
+- name: Request new certificate
+  tags:
+    - certificate
+  command: "certbot certonly --nginx -d {{domain}} -w /var/www --email {{lets_encrypt_email}} --agree-tos --quiet"
+  when: ssl_enabled and (not certificate.stat.exists or ansible_date_time.epoch | float - certificate.stat.mtime > 60*60*24*85)
+
+- name: Install Cron to Renew Certificate
+  cron:
+    name: Renew Certificate
+    user: root
+    minute: 0
+    hour: 5
+    day: 1
+    month: "*/2"
+    job: certbot renew
+

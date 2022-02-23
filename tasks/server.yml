@@ -1,0 +1,78 @@
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: "yes"
+    update_cache: yes
+
+- name: Check if reboot required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot if required
+  reboot:
+  when: reboot_required_file.stat.exists == true
+
+- name: Install certbot
+  snap:
+    name: certbot
+    classic: yes
+
+- name: Install dependencies
+  apt:
+    name: ["git", "curl", "unzip", "ufw", "nginx"]
+    state: present
+
+- name: Configure NODE_ENV
+  lineinfile: dest=/etc/environment line="NODE_ENV={{node_env}}"
+
+- name: Create www dir
+  file:
+    dest: /srv/www
+    state: directory
+    owner: "{{ssh_user}}"
+    group: "{{ssh_user}}"
+
+- name: Check if we have already configured Nginx
+  stat:
+    path: /etc/nginx/sites-available/default-ssl.conf
+  register: stat_result
+
+- name: Configure default Nginx for the first time.
+  block:
+    - name: remove default Nginx config to live.
+      file:
+        path: "{{item}}"
+        state: absent
+      with_items:
+        - /etc/nginx/sites-available/default
+        - /etc/nginx/sites-enabled/default
+
+    - name: Configure site for the certificate
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default.conf
+        force: no
+
+    - name: Link Nginx config to live.
+      file:
+        src: /etc/nginx/sites-available/default.conf
+        dest: /etc/nginx/sites-enabled/default.conf
+        state: link
+      notify:
+        - restart nginx
+
+    - name: stop nginx
+      tags:
+        - provision
+      service:
+        name: nginx
+        state: stopped
+
+    - name: start nginx
+      tags:
+        - provision
+      service:
+        name: nginx
+        state: started
+  when: stat_result.stat.exists == False

@@ -1,0 +1,21 @@
+module.exports = {
+  apps: [
+    {
+      name: "{{domain}}",
+      script: "n8n",
+      watch: false,
+      env: {
+        "N8N_BASIC_AUTH_ACTIVE": true,
+        "N8N_BASIC_AUTH_USER": '{{N8N_BASIC_AUTH_USER}}',
+        "N8N_BASIC_AUTH_PASSWORD": '{{N8N_BASIC_AUTH_PASSWORD}}',
+        "N8N_HOST": 'localhost',
+        "N8N_PORT": '{{node_port}}',
+        "N8N_PROTOCOL": 'http',
+        "NODE_ENV": '{{node_env}}',
+        "WEBHOOK_TUNNEL_URL": 'https://{{domain}}/',
+        "VUE_APP_URL_BASE_API": 'https://{{domain}}/'
+      },
+      autorestart: true
+    }
+  ]
+};

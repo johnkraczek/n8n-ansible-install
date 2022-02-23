@@ -1,0 +1,28 @@
+- name: Add Swap
+  shell: fallocate -l 4G /swapfile
+  args:
+    creates: /swapfile
+  register: swap
+
+- name: Chmod Swap
+  file:
+    path: /swapfile
+    mode: 0600
+  when: swap.changed
+
+- name: Mkswap
+  shell: mkswap /swapfile
+  when: swap.changed
+
+- name: Swapon
+  shell: swapon /swapfile
+  when: swap.changed
+
+- name: Add swap mount to /etc/fstab
+  mount:
+    name: swap
+    src: /swapfile
+    fstype: swap
+    opts: sw
+    state: present
+  when: swap.changed

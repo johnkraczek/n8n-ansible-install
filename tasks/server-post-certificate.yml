@@ -1,0 +1,21 @@
+- name: remove temporary Nginx config. 
+  file:
+    path: "{{item}}"
+    state: absent
+  with_items:
+    - /etc/nginx/sites-enabled/default.conf
+    - /etc/nginx/sites-available/default.conf
+
+- name: Configure site using the certificates
+  template:
+    src: ../templates/nginx-ssl.conf.j2
+    dest: /etc/nginx/sites-available/default-ssl.conf
+    force: no
+  
+- name: Link Nginx config to live. 
+  file:
+    src: /etc/nginx/sites-available/default-ssl.conf
+    dest: /etc/nginx/sites-enabled/default-ssl.conf
+    state: link
+  notify:
+    - restart nginx

@@ -1,0 +1,28 @@
+---
+- name: Initial Configuration
+  hosts: production
+  remote_user: root
+  vars_files:
+    - ./defaults/vars.yml
+
+  handlers:
+    - include: ./handlers/main.yml
+
+  tasks:
+    - include: ./tasks/users.yml
+    - include: ./tasks/server.yml
+    - include: ./tasks/security.yml
+    - include: ./tasks/swapfile.yml
+    - include: ./tasks/certificate.yml
+    - include: ./tasks/server-post-certificate.yml
+
+- name: Start App
+  hosts: production
+  remote_user: "{{system_user}}"
+  vars_files:
+    - ./defaults/vars.yml
+  roles:
+    - role: ansible-role-nvm
+      nodejs_version: "16.13.0"
+  post_tasks:
+    - include: ./tasks/project.yml
