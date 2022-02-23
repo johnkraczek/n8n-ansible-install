@@ -63,15 +63,11 @@
         - restart nginx
 
     - name: stop nginx
-      tags:
-        - provision
       service:
         name: nginx
         state: stopped
 
     - name: start nginx
-      tags:
-        - provision
       service:
         name: nginx
         state: started

@@ -20,4 +20,7 @@
     day: 1
     month: "*/2"
     job: certbot renew
+    state: present
+  tags:
+    - certificate
 

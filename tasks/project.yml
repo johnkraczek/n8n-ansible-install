@@ -26,17 +26,11 @@
     state: present
   environment:
     PATH: "{{ ansible_env.PATH }}:{{npm_path}}"
-  tags: 
-    - provision
-    - never
 
 - name: Template PM2 Ecosystem
   template:
     src: ../templates/noodemation.j2
     dest: ~/ecosystem.config.js  
-  tags: 
-    - provision
-    - never
 
 - name: Start or Reload App
   shell: pm2 startOrReload ecosystem.config.js
@@ -50,14 +44,8 @@
   command: "pm2 startup systemd -u {{ssh_user}} --hp /home/{{ssh_user}}"
   environment:
     PATH: "{{ ansible_env.PATH }}:{{npm_path}}"
-  tags:
-    - provision
-    - never
 
 - name: Save PM2 Processes
   command: "pm2 save"
   environment:
     PATH: "{{ ansible_env.PATH }}:{{npm_path}}"
-  tags:
-    - provision
-    - never
