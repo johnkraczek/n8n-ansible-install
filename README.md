@@ -15,7 +15,7 @@ I wanted to:
 * Configure Nginx to pass the n8n application to the https://
 
 ## How to setup the project
-You need Ansible to start with this project. [So go get it!](http://docs.ansible.com/ansible/intro_getting_started.html) I used ansible 2.9.10 for the project. 
+You need Ansible to start with this project. [So go get it!](https://docs.ansible.com/ansible/2.9/installation_guide/intro_installation.html) I used ansible 2.9.10 for the project. 
 
 * Clone this repo into a folder on your computer:
 
