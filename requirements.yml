@@ -1,0 +1,2 @@
+- name: ansible-role-nvm
+  src: morgangraphics.ansible_role_nvm

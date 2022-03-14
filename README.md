@@ -33,6 +33,10 @@ You need Ansible to start with this project. [So go get it!](http://docs.ansible
 * Point the domain you added to `default/vars.yml` to the IP address you added to the `hosts` file. [Cloudflare DNS] (https://dash.cloudflare.com/) 
   Note: you will need to have cloudflare NOT proxy the domain (Orange Cloud => Grey Cloud).
 
+## Install the galaxy roles:
+Run `ansible-galaxy install -r requirements.yml` to install the galaxy roles used by the playbook. 
+
+
 ## Provision the server:
 
 `ansible-playbook main.yml`
