@@ -2,9 +2,9 @@
 system_user: "admin"
 lets_encrypt_email: "email@example.com" # Important if you want to have lets encrypt provide the ssl cert
 domain: n8n.example.com
-N8N_BASIC_AUTH_ACTIVE: false 
-N8N_BASIC_AUTH_USER: "n8n"
-N8N_BASIC_AUTH_PASSWORD: "changeMe;)"
+N8N_BASIC_AUTH_ACTIVE: "false" 
+N8N_BASIC_AUTH_USER: "n8n_user"
+N8N_BASIC_AUTH_PASSWORD: "ChangeMe;)"
 # END USER EDITs #
 
 # Change things below here only if you know what your doing #

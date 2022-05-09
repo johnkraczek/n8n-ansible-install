@@ -4,7 +4,7 @@
     src: "/home/{{ssh_user}}/.nvm/alias/default"
   register: nodeVersion
   
-- name:
+- name: "Make npm_path string"
   set_fact:
     npm_path: "/home/{{ssh_user}}/.nvm/versions/node/v{{ nodeVersion['content'] |b64decode | trim }}/bin/"
 
@@ -15,9 +15,6 @@
     state: present
   environment:
     PATH: "{{ ansible_env.PATH }}:{{npm_path}}"
-  tags: 
-    - provision
-    - never
 
 - name: Install pm2
   npm:
