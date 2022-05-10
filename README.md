@@ -4,6 +4,11 @@
 # Nodemation on DigitalOcean with Ansible
 > Complete ansible playbook to provision and deploy nodemation to a Digital Ocean droplet.
 
+## One Click Install. 
+If you would prefer to NOT install n8n with ansible, and simply use Digital Ocean's App Platform, you can use this button to deploy this app template to the Digital Ocean App Platform. Doing this is slightly more expensive because you have to pay for the app & the database monthly. Whereas if you use ansible & this playbook you can install the app and the database into the same droplet and that costs less each month.
+
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/johnkraczek/n8n-app-do/tree/master&refcode=0635178ae932)
+
 ## Intro
 This project created to be a one step playbook to deploy new nodemation instances to [DigitalOcean](https://m.do.co/c/0635178ae932) 
 using [Ansible](https://www.ansible.com/). 
