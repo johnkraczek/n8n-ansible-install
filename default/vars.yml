@@ -1,0 +1,25 @@
+
+N8N_PROTOCOL: "https"
+node_env: production
+node_port: 5678
+
+# letsEncrypt
+ssl_enabled: true
+
+# UFW
+ufw_allow_ports:
+  - 22
+  - 80
+  - 443
+
+# SSH
+ssh_port: 22
+
+# User
+ssh_user: "{{system_user}}"
+ssh_groups: "wheel"
+ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+passwordless: true # if you want to have sudo without a password.
+
+#ansible interpreter
+ansible_python_interpreter: "/usr/bin/python3"

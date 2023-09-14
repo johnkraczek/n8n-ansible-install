@@ -1,3 +1,4 @@
 main.retry
 node_modules*
 roles/*
+.vault-pass

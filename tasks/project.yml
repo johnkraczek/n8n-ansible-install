@@ -1,12 +1,18 @@
 
-- name: get node version
-  slurp:
-    src: "/home/{{ssh_user}}/.nvm/alias/default"
-  register: nodeVersion
-  
+- name: get npm path
+  find: 
+    paths: "/home/{{ssh_user}}/.nvm/versions/node/"
+    recurse: no
+    file_type: directory
+  register: output
+
+- name: get the versions
+  set_fact:
+    versions: "{{ output.files|map(attribute='path')|map('basename')|list }}"
+
 - name: "Make npm_path string"
   set_fact:
-    npm_path: "/home/{{ssh_user}}/.nvm/versions/node/v{{ nodeVersion['content'] |b64decode | trim }}/bin/"
+    npm_path: "/home/{{ssh_user}}/.nvm/versions/node/{{versions[0]}}/bin/"
 
 - name: Install N8N
   npm:
@@ -26,7 +32,7 @@
 
 - name: Template PM2 Ecosystem
   template:
-    src: ../templates/noodemation.j2
+    src: ../templates/nodemation.j2
     dest: ~/ecosystem.config.js  
 
 - name: Start or Reload App

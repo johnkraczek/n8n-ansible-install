@@ -1,0 +1,3 @@
+system_user: "admin"
+lets_encrypt_email: "admin@example.com" # Important if you want to have lets encrypt provide the ssl cert
+domain: n8n.example.com
